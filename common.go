@@ -3,6 +3,7 @@ package minify // import "github.com/tdewolff/minify"
 import (
 	"bytes"
 	"encoding/base64"
+	"fmt"
 	"net/url"
 
 	"github.com/tdewolff/parse"
@@ -40,25 +41,17 @@ func Mediatype(b []byte) []byte {
 func DataURI(m *M, dataURI []byte) []byte {
 	if mediatype, data, err := parse.DataURI(dataURI); err == nil {
 		dataURI, _ = m.Bytes(string(mediatype), data)
+		ascii := url.QueryEscape(string(dataURI))
 		base64Len := len(";base64") + base64.StdEncoding.EncodedLen(len(dataURI))
-		asciiLen := len(dataURI)
-		for _, c := range dataURI {
-			if 'A' <= c && c <= 'Z' || 'a' <= c && c <= 'z' || '0' <= c && c <= '9' || c == '-' || c == '_' || c == '.' || c == '~' || c == ' ' {
-				asciiLen++
-			} else {
-				asciiLen += 2
-			}
-			if asciiLen > base64Len {
-				break
-			}
-		}
-		if asciiLen > base64Len {
+		fmt.Println(len(ascii), string(dataURI))
+
+		if len(ascii) > base64Len {
 			encoded := make([]byte, base64Len-len(";base64"))
 			base64.StdEncoding.Encode(encoded, dataURI)
 			dataURI = encoded
 			mediatype = append(mediatype, []byte(";base64")...)
 		} else {
-			dataURI = []byte(url.QueryEscape(string(dataURI)))
+			dataURI = []byte(ascii)
 			dataURI = bytes.Replace(dataURI, []byte("\""), []byte("\\\""), -1)
 		}
 		if len("text/plain") <= len(mediatype) && parse.EqualFold(mediatype[:len("text/plain")], []byte("text/plain")) {
