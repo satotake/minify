@@ -3,7 +3,6 @@ package minify // import "github.com/tdewolff/minify"
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
 	"net/url"
 
 	"github.com/tdewolff/parse"
@@ -43,7 +42,6 @@ func DataURI(m *M, dataURI []byte) []byte {
 		dataURI, _ = m.Bytes(string(mediatype), data)
 		ascii := url.QueryEscape(string(dataURI))
 		base64Len := len(";base64") + base64.StdEncoding.EncodedLen(len(dataURI))
-		fmt.Println(len(ascii), string(dataURI))
 
 		if len(ascii) > base64Len {
 			encoded := make([]byte, base64Len-len(";base64"))
@@ -54,9 +52,11 @@ func DataURI(m *M, dataURI []byte) []byte {
 			dataURI = []byte(ascii)
 			dataURI = bytes.Replace(dataURI, []byte("\""), []byte("\\\""), -1)
 		}
+
 		if len("text/plain") <= len(mediatype) && parse.EqualFold(mediatype[:len("text/plain")], []byte("text/plain")) {
 			mediatype = mediatype[len("text/plain"):]
 		}
+
 		for i := 0; i+len(";charset=us-ascii") <= len(mediatype); i++ {
 			// must start with semicolon and be followed by end of mediatype or semicolon
 			if mediatype[i] == ';' && parse.EqualFold(mediatype[i+1:i+len(";charset=us-ascii")], []byte("charset=us-ascii")) && (i+len(";charset=us-ascii") >= len(mediatype) || mediatype[i+len(";charset=us-ascii")] == ';') {
