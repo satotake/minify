@@ -39,6 +39,7 @@ type Minifier struct {
 	KeepDocumentTags        bool
 	KeepEndTags             bool
 	KeepWhitespace          bool
+	KeepAttrQuotations      bool
 }
 
 // Minify minifies HTML data, it reads from r and writes to w.
@@ -313,16 +314,16 @@ func (o *Minifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[string]st
 						attrs[1].Text = nil
 					}
 				} else if t.Hash == html.Input {
-                    attrs := tb.Attributes(html.Type, html.Value)
-                    if t, value := attrs[0], attrs[1]; t != nil && value != nil {
-                        isRadio := parse.EqualFold(t.AttrVal, []byte("radio"))
-                        if !isRadio && len(value.AttrVal) == 0 {
-                            value.Text = nil
-                        } else if isRadio && parse.EqualFold(value.AttrVal, []byte("on")) {
-                            value.Text = nil
-                        }
-                    }
-                }
+					attrs := tb.Attributes(html.Type, html.Value)
+					if t, value := attrs[0], attrs[1]; t != nil && value != nil {
+						isRadio := parse.EqualFold(t.AttrVal, []byte("radio"))
+						if !isRadio && len(value.AttrVal) == 0 {
+							value.Text = nil
+						} else if isRadio && parse.EqualFold(value.AttrVal, []byte("on")) {
+							value.Text = nil
+						}
+					}
+				}
 
 				// write attributes
 				htmlEqualIdName := false
@@ -412,7 +413,9 @@ func (o *Minifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[string]st
 							continue
 						}
 					} else if len(val) > 5 && attr.Traits&urlAttr != 0 { // anchors are already handled
-						if parse.EqualFold(val[:4], httpBytes) {
+						if o.KeepAttrQuotations {
+							val = val
+						} else if parse.EqualFold(val[:4], httpBytes) {
 							if val[4] == ':' {
 								if m.URL != nil && m.URL.Scheme == "http" {
 									val = val[5:]
@@ -438,11 +441,12 @@ func (o *Minifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[string]st
 						return err
 					}
 					if len(val) > 0 && attr.Traits&booleanAttr == 0 {
+						println(string(val))
 						if _, err := w.Write(isBytes); err != nil {
 							return err
 						}
 						// no quotes if possible, else prefer single or double depending on which occurs more often in value
-						val = html.EscapeAttrVal(&attrByteBuffer, attr.AttrVal, val)
+						val = html.EscapeAttrVal(&attrByteBuffer, attr.AttrVal, val, o.KeepAttrQuotations)
 						if _, err := w.Write(val); err != nil {
 							return err
 						}

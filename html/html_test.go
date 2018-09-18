@@ -51,8 +51,8 @@ func TestHTML(t *testing.T) {
 		{`</span >`, `</span>`},
 		{`<meta name=viewport content="width=0.1, initial-scale=1.0 , maximum-scale=1000">`, `<meta name=viewport content="width=.1,initial-scale=1,maximum-scale=1e3">`},
 		{`<br/>`, `<br>`},
-        {`<input type="radio" value="">`, `<input type=radio value>`},
-        {`<input type="radio" value="on">`, `<input type=radio>`},
+		{`<input type="radio" value="">`, `<input type=radio value>`},
+		{`<input type="radio" value="on">`, `<input type=radio>`},
 
 		// increase coverage
 		{`<script style="css">js</script>`, `<script style=css>js</script>`},
@@ -147,6 +147,29 @@ func TestHTML(t *testing.T) {
 			r := bytes.NewBufferString(tt.html)
 			w := &bytes.Buffer{}
 			err := Minify(m, w, r, nil)
+			test.Minify(t, tt.html, err, w.String(), tt.expected)
+		})
+	}
+}
+
+func TestKeepAttrQuotations(t *testing.T) {
+	htmlTests := []struct {
+		html     string
+		expected string
+	}{
+		{`<a href="http://example.com/"></a>`, `<a href="http://example.com/"></a>`},
+		{`<a href='http://example.com/'></a>`, `<a href="http://example.com/"></a>`},
+	}
+
+	m := minify.New()
+	htmlMinifier := &Minifier{
+		KeepAttrQuotations: true,
+	}
+	for _, tt := range htmlTests {
+		t.Run(tt.html, func(t *testing.T) {
+			r := bytes.NewBufferString(tt.html)
+			w := &bytes.Buffer{}
+			err := htmlMinifier.Minify(m, w, r, nil)
 			test.Minify(t, tt.html, err, w.String(), tt.expected)
 		})
 	}
