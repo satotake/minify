@@ -441,7 +441,6 @@ func (o *Minifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[string]st
 						return err
 					}
 					if len(val) > 0 && attr.Traits&booleanAttr == 0 {
-						println(string(val))
 						if _, err := w.Write(isBytes); err != nil {
 							return err
 						}
