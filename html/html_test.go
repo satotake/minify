@@ -1,4 +1,4 @@
-package html // import "github.com/tdewolff/minify/html"
+package html // import "github.com/satotake/minify/html"
 
 import (
 	"bytes"
@@ -10,12 +10,12 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/tdewolff/minify"
-	"github.com/tdewolff/minify/css"
-	"github.com/tdewolff/minify/js"
-	"github.com/tdewolff/minify/json"
-	"github.com/tdewolff/minify/svg"
-	"github.com/tdewolff/minify/xml"
+	"github.com/satotake/minify"
+	"github.com/satotake/minify/css"
+	"github.com/satotake/minify/js"
+	"github.com/satotake/minify/json"
+	"github.com/satotake/minify/svg"
+	"github.com/satotake/minify/xml"
 	"github.com/tdewolff/test"
 )
 

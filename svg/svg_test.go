@@ -1,4 +1,4 @@
-package svg // import "github.com/tdewolff/minify/svg"
+package svg // import "github.com/satotake/minify/svg"
 
 import (
 	"bytes"
@@ -7,8 +7,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/tdewolff/minify"
-	"github.com/tdewolff/minify/css"
+	"github.com/satotake/minify"
+	"github.com/satotake/minify/css"
 	"github.com/tdewolff/test"
 )
 

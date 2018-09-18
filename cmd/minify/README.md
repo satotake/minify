@@ -1,15 +1,15 @@
 # Minify [![Join the chat at https://gitter.im/tdewolff/minify](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tdewolff/minify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**[Download binaries](https://github.com/tdewolff/minify/releases) for Windows, Linux and macOS**
+**[Download binaries](https://github.com/satotake/minify/releases) for Windows, Linux and macOS**
 
-Minify is a CLI implementation of the minify [library package](https://github.com/tdewolff/minify).
+Minify is a CLI implementation of the minify [library package](https://github.com/satotake/minify).
 
 ## Installation
 Make sure you have [Go](http://golang.org/) and [Git](http://git-scm.com/) installed.
 
 Run the following command
 
-	go get github.com/tdewolff/minify/cmd/minify
+	go get github.com/satotake/minify/cmd/minify
 
 and the `minify` command will be in your `$GOPATH/bin`.
 

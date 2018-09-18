@@ -1,11 +1,11 @@
 // Package html minifies HTML5 following the specifications at http://www.w3.org/TR/html5/syntax.html.
-package html // import "github.com/tdewolff/minify/html"
+package html // import "github.com/satotake/minify/html"
 
 import (
 	"bytes"
 	"io"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/parse"
 	"github.com/tdewolff/parse/buffer"
 	"github.com/tdewolff/parse/html"

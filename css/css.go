@@ -1,5 +1,5 @@
 // Package css minifies CSS3 following the specifications at http://www.w3.org/TR/css-syntax-3/.
-package css // import "github.com/tdewolff/minify/css"
+package css // import "github.com/satotake/minify/css"
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/parse"
 	"github.com/tdewolff/parse/css"
 )
@@ -670,12 +670,12 @@ func (c *cssMinifier) minifyProperty(prop css.Hash, values []Token) []Token {
 				if h == css.Top || h == css.Bottom {
 					if len(values) == 1 {
 						// we can't make this smaller, and converting to a number will break it
-						// (https://github.com/tdewolff/minify/issues/221#issuecomment-415419918)
+						// (https://github.com/satotake/minify/issues/221#issuecomment-415419918)
 						break
 					}
 					// if it's a vertical position keyword, swap it with the next element
 					// since otherwise converted number positions won't be valid anymore
-					// (https://github.com/tdewolff/minify/issues/221#issue-353067229)
+					// (https://github.com/satotake/minify/issues/221#issue-353067229)
 					values[0], values[1] = values[1], values[0]
 				}
 			}

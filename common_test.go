@@ -1,4 +1,4 @@
-package minify // import "github.com/tdewolff/minify"
+package minify // import "github.com/satotake/minify"
 
 import (
 	"fmt"

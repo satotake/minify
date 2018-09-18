@@ -3,7 +3,7 @@ package benchmarks
 import (
 	"io/ioutil"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/parse/buffer"
 )
 

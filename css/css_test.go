@@ -1,4 +1,4 @@
-package css // import "github.com/tdewolff/minify/css"
+package css // import "github.com/satotake/minify/css"
 
 import (
 	"bytes"
@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/test"
 )
 

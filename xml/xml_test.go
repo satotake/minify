@@ -1,4 +1,4 @@
-package xml // import "github.com/tdewolff/minify/xml"
+package xml // import "github.com/satotake/minify/xml"
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/test"
 )
 

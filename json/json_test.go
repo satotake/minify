@@ -1,4 +1,4 @@
-package json // import "github.com/tdewolff/minify/json"
+package json // import "github.com/satotake/minify/json"
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/test"
 )
 

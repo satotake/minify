@@ -1,12 +1,12 @@
 // Package svg minifies SVG1.1 following the specifications at http://www.w3.org/TR/SVG11/.
-package svg // import "github.com/tdewolff/minify/svg"
+package svg // import "github.com/satotake/minify/svg"
 
 import (
 	"bytes"
 	"io"
 
-	"github.com/tdewolff/minify"
-	minifyCSS "github.com/tdewolff/minify/css"
+	"github.com/satotake/minify"
+	minifyCSS "github.com/satotake/minify/css"
 	"github.com/tdewolff/parse"
 	"github.com/tdewolff/parse/buffer"
 	"github.com/tdewolff/parse/css"

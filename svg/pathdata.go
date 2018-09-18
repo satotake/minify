@@ -3,7 +3,7 @@ package svg
 import (
 	strconvStdlib "strconv"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/parse"
 	"github.com/tdewolff/parse/strconv"
 )

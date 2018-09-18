@@ -3,7 +3,7 @@ package benchmarks
 import (
 	"testing"
 
-	"github.com/tdewolff/minify/svg"
+	"github.com/satotake/minify/svg"
 )
 
 var svgSamples = []string{

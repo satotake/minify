@@ -1,10 +1,10 @@
 // Package js minifies ECMAScript5.1 following the specifications at http://www.ecma-international.org/ecma-262/5.1/.
-package js // import "github.com/tdewolff/minify/js"
+package js // import "github.com/satotake/minify/js"
 
 import (
 	"io"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/parse"
 	"github.com/tdewolff/parse/js"
 )

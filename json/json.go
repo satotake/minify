@@ -1,10 +1,10 @@
 // Package json minifies JSON following the specifications at http://json.org/.
-package json // import "github.com/tdewolff/minify/json"
+package json // import "github.com/satotake/minify/json"
 
 import (
 	"io"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/parse/json"
 )
 

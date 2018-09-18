@@ -1,4 +1,4 @@
-package js // import "github.com/tdewolff/minify/js"
+package js // import "github.com/satotake/minify/js"
 
 import (
 	"bytes"
@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/tdewolff/minify"
+	"github.com/satotake/minify"
 	"github.com/tdewolff/test"
 )
 
