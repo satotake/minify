@@ -4,9 +4,9 @@ package xml // import "github.com/satotake/minify/xml"
 import (
 	"io"
 
-	"github.com/satotake/minify"
-	"github.com/tdewolff/parse"
-	"github.com/tdewolff/parse/xml"
+	"github.com/satotake/minify/v2"
+	"github.com/tdewolff/parse/v2"
+	"github.com/tdewolff/parse/v2/xml"
 )
 
 var (

@@ -5,10 +5,10 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/satotake/minify"
-	"github.com/tdewolff/parse"
-	"github.com/tdewolff/parse/buffer"
-	"github.com/tdewolff/parse/html"
+	"github.com/satotake/minify/v2"
+	"github.com/tdewolff/parse/v2"
+	"github.com/tdewolff/parse/v2/buffer"
+	"github.com/tdewolff/parse/v2/html"
 )
 
 var (
@@ -39,7 +39,7 @@ type Minifier struct {
 	KeepDocumentTags        bool
 	KeepEndTags             bool
 	KeepWhitespace          bool
-	KeepAttrQuotations      bool
+  KeepAttrQuotations      bool
 }
 
 // Minify minifies HTML data, it reads from r and writes to w.
@@ -76,10 +76,10 @@ func (o *Minifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[string]st
 				return err
 			}
 		case html.CommentToken:
-			if o.KeepConditionalComments && len(t.Text) > 6 && (bytes.HasPrefix(t.Text, []byte("[if ")) || bytes.Equal(t.Text, []byte("[endif]")) || bytes.Equal(t.Text, []byte("<![endif]"))) {
+			if o.KeepConditionalComments && len(t.Text) > 6 && (bytes.HasPrefix(t.Text, []byte("[if ")) || bytes.HasSuffix(t.Text, []byte("[endif]")) || bytes.HasSuffix(t.Text, []byte("[endif]--"))) {
 				// [if ...] is always 7 or more characters, [endif] is only encountered for downlevel-revealed
 				// see https://msdn.microsoft.com/en-us/library/ms537512(v=vs.85).aspx#syntax
-				if bytes.HasPrefix(t.Data, []byte("<!--[if ")) && len(t.Data) > len("<!--[if ]><![endif]-->") { // downlevel-hidden
+				if bytes.HasPrefix(t.Data, []byte("<!--[if ")) && bytes.HasSuffix(t.Data, []byte("<![endif]-->")) { // downlevel-hidden
 					begin := bytes.IndexByte(t.Data, '>') + 1
 					end := len(t.Data) - len("<![endif]-->")
 					if _, err := w.Write(t.Data[:begin]); err != nil {
@@ -413,7 +413,7 @@ func (o *Minifier) Minify(m *minify.M, w io.Writer, r io.Reader, _ map[string]st
 							continue
 						}
 					} else if len(val) > 5 && attr.Traits&urlAttr != 0 { // anchors are already handled
-						if o.KeepAttrQuotations {
+            if o.KeepAttrQuotations {
 							val = val
 						} else if parse.EqualFold(val[:4], httpBytes) {
 							if val[4] == ':' {
@@ -463,52 +463,43 @@ var (
 	singleQuoteEntityBytes = []byte("&#39;")
 	doubleQuoteEntityBytes = []byte("&#34;")
 )
-
-var charTable = [256]bool{
+ var charTable = [256]bool{
 	// ASCII
 	false, false, false, false, false, false, false, false,
 	false, true, true, true, true, true, false, false, // tab, new line, vertical tab, form feed, carriage return
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
-
-	true, false, true, false, false, false, true, true, // space, ", &, '
+ 	true, false, true, false, false, false, true, true, // space, ", &, '
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, true, true, true, false, // <, =, >
-
+ 	false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false,
+ 	true, false, false, false, false, false, false, false, // `
+	false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false,
+ 	// non-ASCII
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
-
-	true, false, false, false, false, false, false, false, // `
+ 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
-
-	// non-ASCII
+ 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-
-	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-
-	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-	false, false, false, false, false, false, false, false,
-
-	false, false, false, false, false, false, false, false,
+ 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 	false, false, false, false, false, false, false, false,
 }
-
-// EscapeAttrVal returns the escaped attribute value bytes without quotes.
+ // EscapeAttrVal returns the escaped attribute value bytes without quotes.
 func EscapeAttrVal(buf *[]byte, orig, b []byte, keepAttrQuotes bool) []byte {
 	singles := 0
 	doubles := 0
@@ -544,8 +535,7 @@ func EscapeAttrVal(buf *[]byte, orig, b []byte, keepAttrQuotes bool) []byte {
 	} else if !entities && len(orig) == len(b)+2 && (singles == 0 && orig[0] == '\'' || doubles == 0 && orig[0] == '"') {
 		return orig
 	}
-
-	n := len(b) + 2
+ 	n := len(b) + 2
 	var quote byte
 	var escapedQuote []byte
 	if doubles > singles {

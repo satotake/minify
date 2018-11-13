@@ -25,6 +25,7 @@ func TestPathData(t *testing.T) {
 		{"M200,300 Q400,50 600,300 T1000,300", "M2e2 3e2q2e2-250 4e2.0t4e2.0"},
 		{"M300,200 h-150 a150,150 0 1,0 150,-150 z", "M3e2 2e2H150A150 150 0 1 0 3e2 50z"},
 		{"x5 5L10 10", "L10 10"},
+		{"M10 10 10 10", "M10 10"},
 
 		{"M.0.1", "M0 .1"},
 		{"M200.0.1", "M2e2.1"},
@@ -46,6 +47,24 @@ func TestPathData(t *testing.T) {
 	}
 
 	p := NewPathData(&Minifier{Decimals: -1})
+	for _, tt := range pathDataTests {
+		t.Run(tt.pathData, func(t *testing.T) {
+			path := p.ShortenPathData([]byte(tt.pathData))
+			test.Minify(t, tt.pathData, nil, string(path), tt.expected)
+		})
+	}
+}
+
+func TestPathDataTruncated(t *testing.T) {
+	var pathDataTests = []struct {
+		pathData string
+		expected string
+	}{
+		{"m100 0 50 50zM100 0z", "m1e2.0 50 50zm0 0z"},
+		{"M194.4 16.4C194.4 7.4 187 0 177.9 0 168.8 0 161.5 7.4 161.5 16.4", "M194.4 16.4c0-9-7.4-16.4-16.5-16.4-9.1.0-16.4 7.4-16.4 16.4"}, // #233
+	}
+
+	p := NewPathData(&Minifier{Decimals: 3})
 	for _, tt := range pathDataTests {
 		t.Run(tt.pathData, func(t *testing.T) {
 			path := p.ShortenPathData([]byte(tt.pathData))

@@ -4,9 +4,9 @@ package js // import "github.com/satotake/minify/js"
 import (
 	"io"
 
-	"github.com/satotake/minify"
-	"github.com/tdewolff/parse"
-	"github.com/tdewolff/parse/js"
+	"github.com/satotake/minify/v2"
+	"github.com/tdewolff/parse/v2"
+	"github.com/tdewolff/parse/v2/js"
 )
 
 var (

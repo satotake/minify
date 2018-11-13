@@ -3,7 +3,7 @@ package benchmarks
 import (
 	"testing"
 
-	"github.com/satotake/minify/html"
+	"github.com/satotake/minify/v2/html"
 )
 
 var htmlSamples = []string{

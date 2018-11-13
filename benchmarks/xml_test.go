@@ -3,7 +3,7 @@ package benchmarks
 import (
 	"testing"
 
-	"github.com/satotake/minify/xml"
+	"github.com/satotake/minify/v2/xml"
 )
 
 var xmlSamples = []string{

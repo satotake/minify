@@ -1,4 +1,10 @@
-# Minify <a name="minify"></a> [![Build Status](https://travis-ci.org/tdewolff/minify.svg?branch=master)](https://travis-ci.org/tdewolff/minify) [![GoDoc](http://godoc.org/github.com/satotake/minify?status.svg)](http://godoc.org/github.com/satotake/minify) [![Coverage Status](https://coveralls.io/repos/github/tdewolff/minify/badge.svg?branch=master)](https://coveralls.io/github/tdewolff/minify?branch=master) [![Join the chat at https://gitter.im/tdewolff/minify](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tdewolff/minify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Minify <a name="minify"></a> [![Build Status](https://travis-ci.org/tdewolff/minify.svg?branch=master)](https://travis-ci.org/tdewolff/minify) [![GoDoc](http://godoc.org/github.com/tdewolff/minify?status.svg)](http://godoc.org/github.com/tdewolff/minify) [![Coverage Status](https://coveralls.io/repos/github/tdewolff/minify/badge.svg?branch=master)](https://coveralls.io/github/tdewolff/minify?branch=master) [![Join the chat at https://gitter.im/tdewolff/minify](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tdewolff/minify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+***BE AWARE: YOU NEED GO 1.9.7+, 1.10.3+, 1.11 to run the latest release!!!***
+
+If you cannot upgrade Go, please pin to **minify@v2.3.6** and **parse@v2.3.4**
+
+---
 
 **[Online demo](https://go.tacodewolff.nl/minify) if you need to minify files *now*.**
 
@@ -72,18 +78,18 @@ This minifier proves to be that fast and extensive minifier that can handle HTML
 ## Installation
 Run the following command
 
-	go get -u github.com/satotake/minify
+	go get -u github.com/satotake/minify/v2
 
 or add the following imports and run the project with `go get`
 ``` go
 import (
-	"github.com/satotake/minify"
-	"github.com/satotake/minify/css"
-	"github.com/satotake/minify/html"
-	"github.com/satotake/minify/js"
-	"github.com/satotake/minify/json"
-	"github.com/satotake/minify/svg"
-	"github.com/satotake/minify/xml"
+	"github.com/satotake/minify/v2"
+	"github.com/satotake/minify/v2/css"
+	"github.com/satotake/minify/v2/html"
+	"github.com/satotake/minify/v2/js"
+	"github.com/satotake/minify/v2/json"
+	"github.com/satotake/minify/v2/svg"
+	"github.com/satotake/minify/v2/xml"
 )
 ```
 
@@ -410,13 +416,13 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/satotake/minify"
-	"github.com/satotake/minify/css"
-	"github.com/satotake/minify/html"
-	"github.com/satotake/minify/js"
-	"github.com/satotake/minify/json"
-	"github.com/satotake/minify/svg"
-	"github.com/satotake/minify/xml"
+	"github.com/satotake/minify/v2"
+	"github.com/satotake/minify/v2/css"
+	"github.com/satotake/minify/v2/html"
+	"github.com/satotake/minify/v2/js"
+	"github.com/satotake/minify/v2/json"
+	"github.com/satotake/minify/v2/svg"
+	"github.com/satotake/minify/v2/xml"
 )
 
 func main() {
@@ -449,7 +455,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/satotake/minify"
+	"github.com/satotake/minify/v2"
 )
 
 func main() {

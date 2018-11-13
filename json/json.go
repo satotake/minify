@@ -4,8 +4,8 @@ package json // import "github.com/satotake/minify/json"
 import (
 	"io"
 
-	"github.com/satotake/minify"
-	"github.com/tdewolff/parse/json"
+	"github.com/satotake/minify/v2"
+	"github.com/tdewolff/parse/v2/json"
 )
 
 var (

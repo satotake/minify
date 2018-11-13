@@ -10,12 +10,12 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/satotake/minify"
-	"github.com/satotake/minify/css"
-	"github.com/satotake/minify/js"
-	"github.com/satotake/minify/json"
-	"github.com/satotake/minify/svg"
-	"github.com/satotake/minify/xml"
+	"github.com/satotake/minify/v2"
+	"github.com/satotake/minify/v2/css"
+	"github.com/satotake/minify/v2/js"
+	"github.com/satotake/minify/v2/json"
+	"github.com/satotake/minify/v2/svg"
+	"github.com/satotake/minify/v2/xml"
 	"github.com/tdewolff/test"
 )
 
@@ -53,6 +53,7 @@ func TestHTML(t *testing.T) {
 		{`<br/>`, `<br>`},
 		{`<input type="radio" value="">`, `<input type=radio value>`},
 		{`<input type="radio" value="on">`, `<input type=radio>`},
+		{`<input type="text" value="">`, `<input>`},
 
 		// increase coverage
 		{`<script style="css">js</script>`, `<script style=css>js</script>`},
@@ -160,8 +161,7 @@ func TestKeepAttrQuotations(t *testing.T) {
 		{`<a href="http://example.com/"></a>`, `<a href="http://example.com/"></a>`},
 		{`<a href='http://example.com/'></a>`, `<a href="http://example.com/"></a>`},
 	}
-
-	m := minify.New()
+  m := minify.New()
 	htmlMinifier := &Minifier{
 		KeepAttrQuotations: true,
 	}
@@ -174,6 +174,7 @@ func TestKeepAttrQuotations(t *testing.T) {
 		})
 	}
 }
+
 
 func TestHTMLKeepEndTags(t *testing.T) {
 	htmlTests := []struct {
@@ -203,7 +204,9 @@ func TestHTMLKeepConditionalComments(t *testing.T) {
 	}{
 		{`<!--[if IE 6]> <b> </b> <![endif]-->`, `<!--[if IE 6]><b></b><![endif]-->`},
 		{`<![if IE 6]> <b> </b> <![endif]>`, `<![if IE 6]><b></b><![endif]>`},
+		{`<!--[if IE 6]--> <b> </b> <!--[endif]-->`, `<!--[if IE 6]--><b></b><!--[endif]-->`},
 		{`<!--[if !mso]><!--> <b> </b> <!--<![endif]-->`, `<!--[if !mso]><!--><b></b><!--<![endif]-->`},
+		{`<!--[if gt IE 6]><!--> <b> </b> <![endif]-->`, `<!--[if gt IE 6]><!--><b></b><![endif]-->`},
 	}
 
 	m := minify.New()
